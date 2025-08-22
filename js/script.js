@@ -118,14 +118,25 @@ $(function () {
    */
   $(document).keydown(function (e) {
     const key = e.key.toLowerCase();
-
-    // 유효한 키가 아니라면 다른 키보드는 무시
-    // 객체에서 사용자가 입력한 키보드값을 가지는지 확인
     if (!keyMap.hasOwnProperty(key)) {
       return;
     }
     const lane = keyMap[key];
+    inputFn(lane);
+  });
+  /**
+   * 마우스 및 터치 입력 처리 함수
+   * - d, f, j, k 마우스 입력감지하여 아이템 판정을 수행한다.
+   */
+  $(".key").on("mousedown touchstart", function (e) {
+    e.preventDefault();
+    const key = e.target.textContent.toLowerCase();
+    const lane = keyMap[key];
 
+    inputFn(lane);
+  });
+
+  function inputFn(lane) {
     // 키보드가 누르는 판정선 위치를 계산 현재 위치는 하단에서 80px 위로 설정
     const judgeLine = $("#game-container").height() - 80;
 
@@ -155,6 +166,5 @@ $(function () {
     // 성공/실패 관계없이 항상 키 눌림 설정에 대해서 css 적으로 보여주기
     $(".key").eq(lane).addClass("passed");
     setTimeout(() => $(".key").eq(lane).removeClass("passed"), 100);
-  });
-  startGame();
+  }
 });
