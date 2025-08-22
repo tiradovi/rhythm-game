@@ -96,6 +96,23 @@ $(function () {
     );
   }
   /**
+   * 아이템 적중 시 시각적으로 적중했다는 효과를 생성하는 함수
+   * @param {number} laneIndex
+   */
+  function successtime(laneIndex) {
+    // 해당 레인의 위치 정보 가져오기
+    const lane = $(".lane").eq(laneIndex);
+    const laneOffset = lane.position();
+
+    const effect = $("<div class='hit-effect'>").css({
+      left: laneOffset.left + lane.width() / 2 - 30 + "px",
+      top: $("#game-container").height() - 120 + "px",
+    });
+    $("body").append(effect);
+
+    setTimeout(() => effect.remove(), 400);
+  }
+  /**
    * 키보드 입력 처리 함수
    * - d, f, j, k 입력감지하여 아이템 판정을 수행한다.
    */
@@ -123,9 +140,21 @@ $(function () {
           $(this).stop().remove();
           score++;
           $("#score").text(score);
+
+          successtime(lane);
+
+          // 해당 키 버튼에 성공 효과 클래스 추가
+          $(".key").eq(lane).addClass("perfect");
+          setTimeout(() => $(".key").eq(lane).removeClass("perfect"), 300);
+          // setTimeout을 이용해서 입력한 키보드 효과를 0.3초 후 누름 뗌 설정에 대해
+          //css 제공
+          return false;
         }
       }
     });
+    // 성공/실패 관계없이 항상 키 눌림 설정에 대해서 css 적으로 보여주기
+    $(".key").eq(lane).addClass("pressed");
+    setTimeout(() => $(".key").eq(lane).removeClass("pressed"), 100);
   });
   startGame();
 });
