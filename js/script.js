@@ -19,11 +19,11 @@ $(function () {
    * 게임 시작함수
    * - 아이템 생성과 타이머를 시작한다.
    */
-  function startGame() {
+  $("#startBtn").click(() => {
     // 새로운 아이템을 0.8초마다 생성해서 떨어뜨리기
     gameInterval = setInterval(createItems, 800);
     timerInterval = setInterval(updateTimer, 1000);
-  }
+  });
 
   /**
    * 타이머 업데이트 함수
@@ -153,8 +153,8 @@ $(function () {
       }
     });
     // 성공/실패 관계없이 항상 키 눌림 설정에 대해서 css 적으로 보여주기
-    $(".key").eq(lane).addClass("pressed");
-    setTimeout(() => $(".key").eq(lane).removeClass("pressed"), 100);
+    $(".key").eq(lane).addClass("passed");
+    setTimeout(() => $(".key").eq(lane).removeClass("passed"), 100);
   });
   startGame();
 });
