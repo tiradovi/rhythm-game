@@ -130,6 +130,7 @@ $(function () {
    */
   $(".key").on("mousedown touchstart", function (e) {
     e.preventDefault();
+    e.stopPropagation();
     const key = e.target.textContent.toLowerCase();
     const lane = keyMap[key];
 
